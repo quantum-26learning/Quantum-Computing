@@ -58,7 +58,8 @@ scene.add(dirLight);
 //DILUTION REFRIGERATOR GROUP
 const dfgroup = new THREE.Group();
 scene.add(dfgroup);
-dfgroup.position.set(-6,0.5,0);
+dfgroup.position.set(-5.15,-3,0.15);
+dfgroup.scale.set(1.2,1.2,1.2);
 
 
 
@@ -67,7 +68,7 @@ const duGroup = new THREE.Group();
 dfgroup.add(duGroup);
 duGroup.visible = true;
 duGroup.scale.set(0.5,1.1,0.5);
-duGroup.position.set(-0.8,0,0.2);
+duGroup.position.set(-0.8,0,0.4);
 
 // FLANGES
 function goldplate(r, hasHoles = false) {
@@ -221,12 +222,12 @@ function top_flange(r) {
     const mesh = new THREE.Mesh(geometry, material);
 
     dfgroup.add(mesh);
-    mesh.position.y = 11.5;
+    mesh.position.y = 11.9;
     mesh.rotateX(Math.PI / 2);
     return mesh;
 };
 
-top_flange(3);
+top_flange(3.5);
 
 
 
@@ -728,7 +729,7 @@ const tubeMaterial = new THREE.MeshStandardMaterial({
 //still pump line
 const pumpline = new THREE.Group();
 dfgroup.add(pumpline);
-pumpline.scale.set(0.6,0.6,0.6)
+pumpline.scale.set(0.6,0.65,0.6)
 pumpline.position.set(-0.8,7.8,0.2);
 
 function createPumpLineAssembly() {
@@ -1004,8 +1005,8 @@ createBolt(0.6, 6, -0.8, 7.53, 0.2);
 createBolt(2.5, 15, 0, 10.03, 0);
 createBolt(0.9, 9, 1, 10.25, 0.2);
 createBolt(0.75, 8, -1.7, 10.03, 0.2);
-createBolt(2.6, 15, 0, 11.53, 0);
-createBolt(0.8, 8, -1.7, 11.53, 0.2);
+createBolt(3, 15, 0, 11.95, 0);
+createBolt(0.8, 8, -1.7, 11.95, 0.2);
 createBolt(0.4, 4, -0.2, 10.1, -0.72);
 
 //PTC
@@ -1040,8 +1041,8 @@ const copperMaterial =
 
 const pulseCooler = new THREE.Group();
 dfgroup.add(pulseCooler);
-pulseCooler.position.y = 12.5;
-pulseCooler.scale.set(0.8,0.6,0.8)
+pulseCooler.position.y = 13;
+pulseCooler.scale.set(0.8,0.7,0.8)
 pulseCooler.position.x = 1;
 pulseCooler.position.z = 0.2;
 
@@ -1754,16 +1755,14 @@ compressor_pipes();
 // 0. MATERIALS
 const aluminumMaterial = new THREE.MeshStandardMaterial({ color: '#c5cbd1', metalness: 0.9, roughness: 0.1 });
 const darkFrameMaterial = new THREE.MeshStandardMaterial({ color: '#1c1f22', roughness: 0.7 });
-const roofPlateMaterial = new THREE.MeshStandardMaterial({ color: '#3a414a', metalness: 0.6, roughness: 0.3 }); 
+const roofPlateMaterial = new THREE.MeshStandardMaterial({ color: '#3a414a', metalness: 0.9, roughness: 0.3 }); 
 const greenValveMat = new THREE.MeshStandardMaterial({ color: '#4d8060', roughness: 0.4 });
 
 // MASTER STAND GROUP
 const standGroup = new THREE.Group();
 
 // 1. VERTICAL LEGS & BASE ADJUSTMENT FEET
-const legGeo = new THREE.BoxGeometry(0.3, 8, 0.3);
-const footPadGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 32);
-const footSpindleGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.3, 16);
+const legGeo = new THREE.BoxGeometry(0.3, 7.6, 0.3);
 const legPositions = [
     { x: -2, z: -2 }, { x: 4, z: -2 },
     { x: -2, z: 2 },  { x: 4, z: 2 }
@@ -1774,70 +1773,65 @@ legPositions.forEach(pos => {
     const leg = new THREE.Mesh(legGeo, aluminumMaterial);
     leg.position.set(pos.x, 4, pos.z);
     standGroup.add(leg);
-
-    // Foot pad
-    const pad = new THREE.Mesh(footPadGeo, darkFrameMaterial);
-    pad.position.set(pos.x, 0.05, pos.z);
-    standGroup.add(pad);
-
-    // Foot spindle
-    const spindle = new THREE.Mesh(footSpindleGeo, aluminumMaterial);
-    spindle.position.set(pos.x, 0.2, pos.z);
-    standGroup.add(spindle);
 });
 
 // 2. MAIN HEADER BED & JOINT GUSSETS
-const longHeaderGeo = new THREE.BoxGeometry(6.5, 0.5, 0.4);
-const shortHeaderGeo = new THREE.BoxGeometry(0.4, 0.5, 4.5);
+const longHeaderGeo = new THREE.BoxGeometry(6.3, 0.5, 0.4);
+const shortHeaderGeo = new THREE.BoxGeometry(0.4, 0.5, 4.4);
 
-const h1 = new THREE.Mesh(longHeaderGeo, darkFrameMaterial); h1.position.set(1, 7.6, 2); standGroup.add(h1);
-const h2 = new THREE.Mesh(longHeaderGeo, darkFrameMaterial); h2.position.set(1, 7.6, -2); standGroup.add(h2);
-const h3 = new THREE.Mesh(shortHeaderGeo, darkFrameMaterial); h3.position.set(-2, 7.6, 0); standGroup.add(h3);
-const h4 = new THREE.Mesh(shortHeaderGeo, darkFrameMaterial); h4.position.set(4, 7.6, 0); standGroup.add(h4);
+const h1 = new THREE.Mesh(longHeaderGeo, aluminumMaterial); h1.position.set(1, 7.6, 2); standGroup.add(h1);
+const h2 = new THREE.Mesh(longHeaderGeo, aluminumMaterial); h2.position.set(1, 7.6, -2); standGroup.add(h2);
+const h3 = new THREE.Mesh(shortHeaderGeo, aluminumMaterial); h3.position.set(-2, 7.6, 0); standGroup.add(h3);
+const h4 = new THREE.Mesh(shortHeaderGeo, aluminumMaterial); h4.position.set(4, 7.6, 0); standGroup.add(h4);
 
-function addGusset(x, z, rotY) {
-    const gussetGeo = new THREE.BoxGeometry(0.4, 0.4, 0.3);
+function addGusset(x, z) {
+    const gussetGeo = new THREE.BoxGeometry(0.4, 0.1, 0.3);
     const gusset = new THREE.Mesh(gussetGeo, darkFrameMaterial);
-    gusset.position.set(x, 8, z);
-    gusset.rotation.y = rotY;
+    gusset.position.set(x, 7.85, z);
+    gusset.rotation.y = Math.PI /2;
     standGroup.add(gusset);
 }
-addGusset(2.7, 2, Math.PI / 2);
-addGusset(2.7, -2.05, Math.PI);
+addGusset(2, 1.8);
+addGusset(-0.8, 1.8);
+addGusset(2, -1.7);
+addGusset(-0.8, -1.7);
 
 // 3. HORIZONTAL CROSS BRACES
-const sideBraceGeo = new THREE.BoxGeometry(0.2, 0.2, 4.0);
-const backBraceGeo = new THREE.BoxGeometry(6.0, 0.2, 0.2);
-const braceHeights = [2.0, 4.5, 6.0];
+const sideBraceGeo = new THREE.BoxGeometry(0.3, 0.4, 4.0);
+const backBraceGeo = new THREE.BoxGeometry(3.1, 0.4, 0.3);
+const braceHeights = [3.0, 7.6];
+const left = [-2, -0.8]
+const right = [4, 2]
 
-braceHeights.forEach(h => {
-    const bLeft = new THREE.Mesh(sideBraceGeo, aluminumMaterial); bLeft.position.set(-2, h, 0); standGroup.add(bLeft);
-    const bRight = new THREE.Mesh(sideBraceGeo, aluminumMaterial); bRight.position.set(4, h, 0); standGroup.add(bRight);
-    const bBack = new THREE.Mesh(backBraceGeo, aluminumMaterial); bBack.position.set(1, h, -2); standGroup.add(bBack);
+braceHeights.forEach((h, i) => {
+    const bLeft = new THREE.Mesh(sideBraceGeo, aluminumMaterial); bLeft.position.set(left[i], h, 0); standGroup.add(bLeft);
+    const bRight = new THREE.Mesh(sideBraceGeo, aluminumMaterial); bRight.position.set(right[i], h, 0); standGroup.add(bRight);
+    const bBack = new THREE.Mesh(backBraceGeo, aluminumMaterial); bBack.position.set(0.6, 7.6, -1.4); standGroup.add(bBack);
+    const bfront = new THREE.Mesh(backBraceGeo, aluminumMaterial); bfront.position.set(0.6, 7.6, 1.45); standGroup.add(bfront);
 });
 
-// 4. TOP VALVE ARRAY ASSEMBLY
-const valveFrameGeo = new THREE.BoxGeometry(0.15, 1.2, 0.8);
-const valveFrame = new THREE.Mesh(valveFrameGeo, aluminumMaterial);
-valveFrame.position.set(1.5, 8.6, 1.0);
-standGroup.add(valveFrame);
+//support braces
+function supportBrace(x, y, z, angle) {
+  const supportbracegeo = new THREE.BoxGeometry(1.6, 0.3, 0.3);
+  const supportbrace = new THREE.Mesh(supportbracegeo, aluminumMaterial);
+  supportbrace.position.set(x, y, z);
+  supportbrace.rotation.z = angle;
+  standGroup.add(supportbrace);
+};
 
-const valveCylGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.5, 24);
-const v1 = new THREE.Mesh(valveCylGeo, greenValveMat); v1.position.set(1.5, 9.0, 0.7); v1.rotation.x = Math.PI/2; standGroup.add(v1);
-const v2 = new THREE.Mesh(valveCylGeo, greenValveMat); v2.position.set(1.5, 9.0, 1.3); v2.rotation.x = Math.PI/2; standGroup.add(v2);
+supportBrace(-1.6, 6.7, -2, Math.PI / 3);
+supportBrace(-1.6, 6.7, 2, Math.PI / 3);
+supportBrace(3.6, 6.7, -2, -Math.PI / 3);
+supportBrace(3.6, 6.7, 2, -Math.PI / 3);
 
 // 5. ANIMATED CLEAN SQUARE ROOF PLATFORM
 const topPlateGroup = new THREE.Group();
 topPlateGroup.position.set(0.25, 8.0, 0); 
 
 // The Solid Square Roof / Ceiling plate covering the top completely
-const Roof1Geo = new THREE.BoxGeometry(4.8, 0.15, 4.3);
-const Roof1 = new THREE.Mesh(Roof1Geo, roofPlateMaterial);
-Roof1.position.y = 0.075;
-topPlateGroup.add(Roof1);
-const Roof2geo = new THREE.BoxGeometry(1.5, 0.15, 4.3);
+const Roof2geo = new THREE.BoxGeometry(1.6, 0.15, 4.3);
 const Roof2 = new THREE.Mesh(Roof2geo, roofPlateMaterial);
-Roof2.position.set(3.2, 0.075, 0);
+Roof2.position.set(2.8, -0.05, 0);
 topPlateGroup.add(Roof2);
 
 // Add the top plate to the standGroup instead of the scene directly
@@ -2012,7 +2006,7 @@ pipe_assembly_group.add(ghucollar);
 
 
 //add grp to scene
-scene.add(pipe_assembly_group); 
+// scene.add(pipe_assembly_group); 
 pipe_assembly_group.scale.set(3,3,3);
 pipe_assembly_group.position.set(5.8,10,0);
 pipe_assembly_group.rotation.y = Math.PI;
