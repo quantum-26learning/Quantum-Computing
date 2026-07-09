@@ -1868,6 +1868,82 @@ topPlateGroup.add(Roof2);
 // Add the top plate to the standGroup instead of the scene directly
 standGroup.add(topPlateGroup);
 
+// 4. TOP VALVE ARRAY ASSEMBLY
+const EFAssembly= new THREE.Group();
+const EFmainGeom = new THREE.BoxGeometry(1,2,2);
+const EFmainmat =new THREE.MeshStandardMaterial({color:0x6B8E23,metalness:1,roughness:0.15});
+const EFmain = new THREE.Mesh(EFmainGeom,EFmainmat);
+EFAssembly.add(EFmain);
+//EFmain.rotation.x = Math.PI/2;
+
+const EFmain2 = EFmain.clone();
+EFAssembly.add(EFmain2);
+EFmain2.position.set(0,2.02,0);
+
+const EFconnectorGeom = new THREE.CylinderGeometry(0.7,0.7,3,16,32);
+const Efconnectormat = new THREE.MeshStandardMaterial({color:0x91B7D8,metalness:0.7,roughness:0.1});
+const EFconnector = new THREE.Mesh(EFconnectorGeom,Efconnectormat);
+EFAssembly.add(EFconnector);
+EFconnector.position.set(0,0,0);
+EFconnector.rotation.z= Math.PI/2;
+
+const EFconendGeom = new THREE.SphereGeometry(0.65,32,16,0,Math.PI*2,0,Math.PI/2);
+const EFconend = new THREE.Mesh(EFconendGeom,Efconnectormat);
+EFAssembly.add(EFconend);
+EFconend.position.set(1.3,0,0);
+EFconend.rotation.z = -Math.PI/2;
+
+const EFconend2 = EFconend.clone();
+EFAssembly.add(EFconend2);
+EFconend2.position.set(-1.3,0,0);
+
+EFconend2.rotation.z=Math.PI/2;
+//EFconnecting wire
+const EFwirePoints = [
+    new THREE.Vector3(1.95, 0, 0),   // Start from EFconnector end
+    new THREE.Vector3(2.3, 0.05, 0),
+    new THREE.Vector3(2.8, 0.2, -0.15),
+    new THREE.Vector3(3.5, 0.4, -0.4),
+    new THREE.Vector3(4.5, 0.3, -0.8)
+];
+
+const EFwireCurve = new THREE.CatmullRomCurve3(EFwirePoints);
+
+const EFwireGeom = new THREE.TubeGeometry(
+    EFwireCurve,
+    100,
+    0.05,
+    12,
+    false
+);
+
+
+
+const EFwire = new THREE.Mesh(EFwireGeom, Efconnectormat);
+EFAssembly.add(EFwire);
+const EFwire2 = EFwire.clone();
+EFAssembly.add(EFwire2);
+EFwire2.position.set(0,2.05,0);
+
+const EFconnector2=EFconnector.clone();
+EFAssembly.add(EFconnector2);
+EFconnector2.position.set(0,2.05,0);
+
+const EFconend3 = EFconend2.clone();
+EFAssembly.add(EFconend3);
+EFconend3.position.set(-1.3,2.05,0);
+
+const EFconend4 = EFconend.clone();
+EFAssembly.add(EFconend4);
+EFconend4.position.set(1.3,2.05,0);
+
+standGroup.add(EFAssembly);
+EFAssembly.rotation.y=-Math.PI;
+EFAssembly.position.set(3.4,8.5,-0.8);
+EFAssembly.scale.set(0.4,0.4,0.4);
+
+
+
 scene.add(standGroup);
 standGroup.scale.set(3,2.5,3);
 standGroup.position.y = -8.5;
