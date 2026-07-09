@@ -1041,15 +1041,15 @@ const copperMaterial =
 
 const pulseCooler = new THREE.Group();
 dfgroup.add(pulseCooler);
-pulseCooler.position.y = 13;
-pulseCooler.scale.set(0.8,0.7,0.8)
+pulseCooler.position.y = 12.5;
+pulseCooler.scale.set(0.8,0.6,0.8)
 pulseCooler.position.x = 1;
 pulseCooler.position.z = 0.2;
 
 // =================================================
 // Top Cap
 // =================================================
-
+const ptcheadgrp = new THREE.Group();
 const topCap = new THREE.Mesh(
   new THREE.CylinderGeometry(
     0.9,
@@ -1062,7 +1062,7 @@ const topCap = new THREE.Mesh(
 
 topCap.position.y = 2.0;
 
-pulseCooler.add(topCap);
+ptcheadgrp.add(topCap);
 const topRing = new THREE.Mesh(
   new THREE.CylinderGeometry(
     1.15,
@@ -1075,7 +1075,7 @@ const topRing = new THREE.Mesh(
 
 topRing.position.y = 1.25;
 
-pulseCooler.add(topRing);
+ptcheadgrp.add(topRing);
 
 // =================================================
 // Main Housing
@@ -1093,7 +1093,7 @@ const housing = new THREE.Mesh(
 
 housing.position.y = 0.15;
 
-pulseCooler.add(housing);
+ptcheadgrp.add(housing);
 
 
 for(let i = 0; i < 8; i++){
@@ -1116,7 +1116,7 @@ for(let i = 0; i < 8; i++){
     Math.sin(angle) * 1.15
   );
 
-  pulseCooler.add(bolt);
+  ptcheadgrp.add(bolt);
 }
 
 // =================================================
@@ -1143,7 +1143,7 @@ for(let i = 0; i < 2; i++){
     0
   );
 
-  pulseCooler.add(pipe);
+  ptcheadgrp.add(pipe);
 
   const fitting = new THREE.Mesh(
     new THREE.CylinderGeometry(
@@ -1163,7 +1163,7 @@ for(let i = 0; i < 2; i++){
   0
 );
 
-pulseCooler.add(fitting);
+ptcheadgrp.add(fitting);
 
 const collar = new THREE.Mesh(
   new THREE.CylinderGeometry(
@@ -1183,7 +1183,7 @@ collar.position.set(
   0
 );
 
-pulseCooler.add(collar);
+ptcheadgrp.add(collar);
 
 }
 
@@ -1204,8 +1204,34 @@ brassFitting.position.set(
    0.45,
    0
 );
+// Brass fitting wire curve
+    const brassFittingWireCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(1.79, 13.33, 3), // Start at brass fitting
+    new THREE.Vector3(1.79, 13.80, 3.50), // Straight section
+    new THREE.Vector3(1.85, 14.60, 3.55), // Gentle bend begins
+    new THREE.Vector3(2.10, 16.00, 3.80),
+    new THREE.Vector3(2.60, 18.00, 4.20),
+    new THREE.Vector3(3.20, 20.50, 4.80)  // Continue toward destination
+]);
 
-pulseCooler.add(brassFitting);
+brassFittingWireCurve.curveType = "centripetal";
+brassFittingWireCurve.tension = 0.2;
+
+
+const brassFittingWire = new THREE.Mesh(
+    new THREE.TubeGeometry(brassFittingWireCurve, 100, 0.03, 12, false),
+    new THREE.MeshStandardMaterial({
+        color:'black',
+        metalness: 0.9,
+        roughness: 0.3
+    })
+);
+
+brassFitting.add(brassFittingWire);
+
+ptcheadgrp.add(brassFitting);
+
+
 
 // =================================================
 // Mounting Flange
@@ -1223,7 +1249,7 @@ const flange = new THREE.Mesh(
 
 flange.position.y = -1.4;
 
-pulseCooler.add(flange);
+ptcheadgrp.add(flange);
 
 for(let i = 0; i < 12; i++){
 
@@ -1247,8 +1273,10 @@ for(let i = 0; i < 12; i++){
     Math.sin(angle) * 1.55
   );
 
-  pulseCooler.add(bolt);
+  ptcheadgrp.add(bolt);
 }
+pulseCooler.add(ptcheadgrp);
+ptcheadgrp.position.set(10, 0, 4);
 
 // =================================================
 // Vacuum Tube
@@ -1299,6 +1327,8 @@ leftRod.position.set(
 );
 
 pulseCooler.add(leftRod);
+
+
 
 // =================================================
 // Copper Stage
@@ -1423,6 +1453,7 @@ for(let i = 0; i < 8; i++){
 
   pulseCooler.add(bolt);
 }
+
 
 //dfcase
 
