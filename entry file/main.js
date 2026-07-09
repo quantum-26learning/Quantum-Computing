@@ -1227,7 +1227,7 @@ const brassFittingWire = new THREE.Mesh(
     })
 );
 
-brassFitting.add(brassFittingWire);
+//brassFitting.add(brassFittingWire);
 
 ptcheadgrp.add(brassFitting);
 
@@ -1276,7 +1276,7 @@ for(let i = 0; i < 12; i++){
   ptcheadgrp.add(bolt);
 }
 pulseCooler.add(ptcheadgrp);
-ptcheadgrp.position.set(10, 0, 4);
+ptcheadgrp.position.set(6, 1, 4);
 
 // =================================================
 // Vacuum Tube
@@ -1939,7 +1939,7 @@ EFconend4.position.set(1.3,2.05,0);
 
 standGroup.add(EFAssembly);
 EFAssembly.rotation.y=-Math.PI;
-EFAssembly.position.set(3.4,8.5,-0.8);
+EFAssembly.position.set(3,8.3,-0.9);
 EFAssembly.scale.set(0.4,0.4,0.4);
 
 
