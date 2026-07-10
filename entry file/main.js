@@ -230,6 +230,37 @@ function top_flange(r) {
 top_flange(3.5);
 
 
+//top flange details
+const tf_material =  new THREE.MeshStandardMaterial({color: 0x00c9fc, side: THREE.DoubleSide, roughness: 1, metalness: 1});
+function tf_cylinder(r,d, x, y, z, angle, bevel = false) {
+    const shape = new THREE.Shape();
+    shape.absarc( 0, 0, r, 0, angle, true );
+    const extrudesettings = {
+            depth: d,
+            bevelEnabled: bevel,
+            bevelSize: 0.01,
+            bevelThickness: 0.02,
+            curveSegments: 64,
+        };
+        
+    const geometry = new THREE.ExtrudeGeometry(shape, extrudesettings);
+    const mesh = new THREE.Mesh(geometry, tf_material);
+    mesh.position.set(x, y, z);
+    mesh.rotation.x = - Math.PI / 2;
+    dfgroup.add(mesh); 
+    return mesh;    
+};
+
+tf_cylinder(0.2, 0.9, -1.5, 11.8, -1, Math.PI * 2);
+tf_cylinder(0.24, 0.1, -1.5, 12.4, -1, Math.PI * 2);
+tf_cylinder(0.35, 1.3, -1.5, 12.7, -1.15, Math.PI);
+tf_cylinder(1, 0.2, 1.5, 11.9, 0, Math.PI * 2);
+tf_cylinder(0.8, 0.9, 1.5, 12, 0, Math.PI * 2);
+tf_cylinder(0.2, 0.7, 0.3, 11.9, 0, Math.PI * 2);
+tf_cylinder(0.25, 0.01, 0.3, 12.6, 0, Math.PI * 2, true);
+tf_cylinder(0.4, 0.7, -0.1, 12, 1.5, Math.PI * 2, true);
+tf_cylinder(0.45, 0.1, -0.1, 12.5, 1.5, Math.PI * 2,);
+
 
 //dilution unit
 function cont_heatexchanger() {
