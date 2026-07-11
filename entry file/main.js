@@ -2008,6 +2008,7 @@ standGroup.add(topPlateGroup);
 const EFAssembly= new THREE.Group();
 const EFmainGeom = new THREE.BoxGeometry(1,2,2);
 const EFmainmat =new THREE.MeshStandardMaterial({color:0x636A6E,metalness:1,roughness:0.15});
+const EFmainmat =new THREE.MeshStandardMaterial({color:0x636A6E,metalness:1,roughness:0.15});
 const EFmain = new THREE.Mesh(EFmainGeom,EFmainmat);
 EFAssembly.add(EFmain);
 //EFmain.rotation.x = Math.PI/2;
@@ -2017,6 +2018,7 @@ EFAssembly.add(EFmain2);
 EFmain2.position.set(0,2.02,0);
 
 const EFconnectorGeom = new THREE.CylinderGeometry(0.7,0.7,3,16,32);
+const Efconnectormat = new THREE.MeshStandardMaterial({color:0xd6d6d6,metalness:1,roughness:0.15});
 const Efconnectormat = new THREE.MeshStandardMaterial({color:0xd6d6d6,metalness:1,roughness:0.15});
 const EFconnector = new THREE.Mesh(EFconnectorGeom,Efconnectormat);
 EFAssembly.add(EFconnector);
@@ -2039,6 +2041,8 @@ const EFwirePoints = [
     new THREE.Vector3(1.95, 0, 0),   // Start from EFconnector end
     new THREE.Vector3(2.3, 0.05, 0),
     new THREE.Vector3(2.8, 0.2, -0.15),
+    //new THREE.Vector3(3.5, 0.4, -0.4),
+    //new THREE.Vector3(4.5, 0.3, -0.8)
     //new THREE.Vector3(3.5, 0.4, -0.4),
     //new THREE.Vector3(4.5, 0.3, -0.8)
 ];
