@@ -259,13 +259,112 @@ tf_cylinder(0.8, 0.9, 1.5, 12, 0, Math.PI * 2);
 tf_cylinder(0.2, 0.7, 0.3, 11.9, 0, Math.PI * 2);
 tf_cylinder(0.25, 0.01, 0.3, 12.6, 0, Math.PI * 2, true);
 tf_cylinder(0.45, 0.15, -0.1, 12, 1.5, Math.PI * 2, true);
-tf_cylinder(0.5, 0.1, -0.1, 12.05, 1.5, Math.PI * 2,);
-tf_cylinder(0.45, 0.15, -0.3, 12, -1, Math.PI * 2, true);
-tf_cylinder(0.5, 0.1, -0.3, 12.05, -1, Math.PI * 2,);
+tf_cylinder(0.55, 0.1, -0.1, 12.05, 1.5, Math.PI * 2,);
+tf_cylinder(0.45, 0.15, -0.3, 12, -1.5, Math.PI * 2, true);
+tf_cylinder(0.53, 0.1, -0.3, 12.05, -1.5, Math.PI * 2,);
+
+
+const topflangGrp = new THREE.Group();
+const topvaccumGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 32);
+const topvaccumMat = new THREE.MeshStandardMaterial({ color: 0x595959 , metalness: 1, roughness: 0.15 });
+const topvaccum = new THREE.Mesh(topvaccumGeo, topvaccumMat);
+topvaccum.position.set(0.6, 7.9, 0.7);
+//topflangGrp.add(topvaccum);
+
+const topvaccum2 = new THREE.CircleGeometry(0.25,32);
+const topvaccum2Mat = new THREE.MeshStandardMaterial({ color: 0x595959 , metalness: 1, roughness: 0.15 });
+const topvaccum2Mesh = new THREE.Mesh(topvaccum2, topvaccum2Mat);
+topvaccum2Mesh.position.set(0.6, 8., 0.7);
+topvaccum2Mesh.rotation.x = -Math.PI / 2;
+//topflangGrp.add(topvaccum2Mesh);
+
+const vaccumcylinderGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.35, 32);
+const vaccumcylinderMat = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 0.7, roughness: 0.45 });
+const vaccumcylinder = new THREE.Mesh(vaccumcylinderGeo, vaccumcylinderMat);
+vaccumcylinder.position.set(0.9, 8, 0.7);
+topflangGrp.add(vaccumcylinder);
+const vaccumcylindertopassemble = new THREE.Group();
+const vaccumcylindertop = topvaccum.clone();
+vaccumcylindertop.position.set(1, 8.2, 0.7);
+vaccumcylindertopassemble.add(vaccumcylindertop);
+vaccumcylindertop.scale.set(0.4,0.2,0.4);
+ const vaccumcylindertopring = new THREE.RingGeometry(0.09,0.13,32);
+const vaccumcylindertopringMat = new THREE.MeshStandardMaterial({ color: 0x9370DB, metalness: 1, roughness: 0.15 });
+const vaccumcylindertopringMesh = new THREE.Mesh(vaccumcylindertopring, vaccumcylindertopringMat);
+vaccumcylindertopringMesh.position.set(1, 8.2, 0.7);
+vaccumcylindertopringMesh.rotation.x = -Math.PI / 2;
+vaccumcylindertopassemble.add(vaccumcylindertopringMesh);
+const vaccumcylindertopring2 = new THREE.RingGeometry(0.085,0.09,32);
+const vaccumcylindertopring2Mat = new THREE.MeshStandardMaterial({ color: 0x636A6E, metalness: 1, roughness: 0.15 });
+const vaccumcylindertopring2Mesh = new THREE.Mesh(vaccumcylindertopring2, vaccumcylindertopring2Mat);
+vaccumcylindertopring2Mesh.position.set(1, 8.23, 0.7);
+vaccumcylindertopring2Mesh.rotation.x = -Math.PI / 2;
+vaccumcylindertopassemble.add(vaccumcylindertopring2Mesh);
+topflangGrp.add(vaccumcylindertopassemble);
+vaccumcylindertopassemble.position.set(-0.1, 0, 0);
+
+const vaccumcylindertopassemble1 = vaccumcylindertopassemble.clone();
+const additionalvaccumcy= vaccumcylinder.clone();
+additionalvaccumcy.position.x+=0.1;
+vaccumcylindertopassemble1.add(additionalvaccumcy);
+vaccumcylindertopassemble1.position.set(-0.7, 0, -0.2);
+
+topflangGrp.add(vaccumcylindertopassemble1);
+ 
+const vaccumcylindertopassemble2 = topflangGrp.clone();
+vaccumcylindertopassemble2.position.set(-0.1,0,-1)
+topflangGrp.add(vaccumcylindertopassemble2);
+
+
+//add side bolts
+const sideboltGRp = new THREE.Group();
+const sideboltGeo = new THREE.BoxGeometry(0.08,0.13,0.09);
+const sideboltMat = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 1, roughness: 0.15 });
+const sidebolt1 = new THREE.Mesh(sideboltGeo, sideboltMat);
+sidebolt1.position.set(0.7, 8., 0.84);
+sidebolt1.rotation.x = Math.PI / 2;
+sidebolt1.rotation.z = -Math.PI / 6;
+sideboltGRp.add(sidebolt1);
+const sidebolts1 = sidebolt1.clone();
+sidebolts1.position.set(0.35, 8., 0.71);
+sidebolts1.rotation.z = Math.PI / 3;
+sideboltGRp.add(sidebolts1);
+const sidebolts2 = sidebolt1.clone();
+sidebolts2.position.set(0.63, 8., 0.42);
+sidebolts2.rotation.z = Math.PI / 12;
+sideboltGRp.add(sidebolts2);
 
 
 
 
+const sidebolttop = Hexnut(0.76, 1.5);
+sidebolttop.material = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 1, roughness: 0.15 });
+sidebolttop.position.set(0.7, 8.09, 0.84);
+sidebolttop.scale.set(0.04,0.04,0.04);
+sidebolttop.rotation.x = Math.PI / 2;
+sidebolttop.rotation.z = Math.PI / 6;
+const sidebolttop2 = sidebolttop.clone();
+sidebolttop2.position.set(0.35, 8.09, 0.71);
+sidebolttop2.rotation.z = -Math.PI / 3;
+const sidebolttop3 = sidebolttop.clone();
+sidebolttop3.position.set(0.63, 8.09, 0.42);
+sidebolttop3.rotation.z = -Math.PI / 12;  
+
+sideboltGRp.add(sidebolttop);
+sideboltGRp.add(sidebolttop2);
+sideboltGRp.add(sidebolttop3);
+
+sideboltGRp.add(sidebolttop);
+topflangGrp.add(sideboltGRp);
+const sideboltGRp2 = sideboltGRp.clone();
+sideboltGRp2.position.set(-0.06, 0, -1);
+
+topflangGrp.add(sideboltGRp2);
+
+
+topflangGrp.scale.set(3,2.5,3);
+topflangGrp.position.set(-1.8, -8, -0.45);
+dfgroup.add(topflangGrp);
 
 //dilution unit
 function cont_heatexchanger() {
@@ -1980,119 +2079,12 @@ EFAssembly.position.set(3,8.5,-1.5);
 EFAssembly.scale.set(0.45,0.45,0.45);
 
 
-//------------
-//top flangs view
-//-----------
-const topflangGrp = new THREE.Group();
-const topvaccumGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 32);
-const topvaccumMat = new THREE.MeshStandardMaterial({ color: 0x595959 , metalness: 1, roughness: 0.15 });
-const topvaccum = new THREE.Mesh(topvaccumGeo, topvaccumMat);
-topvaccum.position.set(0.6, 7.9, 0.7);
-//topflangGrp.add(topvaccum);
-
-const topvaccum2 = new THREE.CircleGeometry(0.25,32);
-const topvaccum2Mat = new THREE.MeshStandardMaterial({ color: 0x595959 , metalness: 1, roughness: 0.15 });
-const topvaccum2Mesh = new THREE.Mesh(topvaccum2, topvaccum2Mat);
-topvaccum2Mesh.position.set(0.6, 8., 0.7);
-topvaccum2Mesh.rotation.x = -Math.PI / 2;
-//topflangGrp.add(topvaccum2Mesh);
-
-const vaccumcylinderGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.35, 32);
-const vaccumcylinderMat = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 0.7, roughness: 0.45 });
-const vaccumcylinder = new THREE.Mesh(vaccumcylinderGeo, vaccumcylinderMat);
-vaccumcylinder.position.set(0.9, 8, 0.7);
-topflangGrp.add(vaccumcylinder);
-const vaccumcylindertopassemble = new THREE.Group();
-const vaccumcylindertop = topvaccum.clone();
-vaccumcylindertop.position.set(1, 8.2, 0.7);
-vaccumcylindertopassemble.add(vaccumcylindertop);
-vaccumcylindertop.scale.set(0.4,0.2,0.4);
- const vaccumcylindertopring = new THREE.RingGeometry(0.09,0.13,32);
-const vaccumcylindertopringMat = new THREE.MeshStandardMaterial({ color: 0x9370DB, metalness: 1, roughness: 0.15 });
-const vaccumcylindertopringMesh = new THREE.Mesh(vaccumcylindertopring, vaccumcylindertopringMat);
-vaccumcylindertopringMesh.position.set(1, 8.2, 0.7);
-vaccumcylindertopringMesh.rotation.x = -Math.PI / 2;
-vaccumcylindertopassemble.add(vaccumcylindertopringMesh);
-const vaccumcylindertopring2 = new THREE.RingGeometry(0.085,0.09,32);
-const vaccumcylindertopring2Mat = new THREE.MeshStandardMaterial({ color: 0x636A6E, metalness: 1, roughness: 0.15 });
-const vaccumcylindertopring2Mesh = new THREE.Mesh(vaccumcylindertopring2, vaccumcylindertopring2Mat);
-vaccumcylindertopring2Mesh.position.set(1, 8.23, 0.7);
-vaccumcylindertopring2Mesh.rotation.x = -Math.PI / 2;
-vaccumcylindertopassemble.add(vaccumcylindertopring2Mesh);
-topflangGrp.add(vaccumcylindertopassemble);
-vaccumcylindertopassemble.position.set(-0.1, 0, 0);
-
-const vaccumcylindertopassemble1 = vaccumcylindertopassemble.clone();
-const additionalvaccumcy= vaccumcylinder.clone();
-additionalvaccumcy.position.x+=0.1;
-vaccumcylindertopassemble1.add(additionalvaccumcy);
-vaccumcylindertopassemble1.position.set(-0.7, 0, -0.2);
-
-topflangGrp.add(vaccumcylindertopassemble1);
- 
-const vaccumcylindertopassemble2 = topflangGrp.clone();
-vaccumcylindertopassemble2.position.set(-0.1,0,-1)
-topflangGrp.add(vaccumcylindertopassemble2);
-
-
-//add side bolts
-const sideboltGRp = new THREE.Group();
-const sideboltGeo = new THREE.BoxGeometry(0.08,0.13,0.09);
-const sideboltMat = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 1, roughness: 0.15 });
-const sidebolt1 = new THREE.Mesh(sideboltGeo, sideboltMat);
-sidebolt1.position.set(0.7, 8., 0.84);
-sidebolt1.rotation.x = Math.PI / 2;
-sidebolt1.rotation.z = -Math.PI / 6;
-sideboltGRp.add(sidebolt1);
-const sidebolts1 = sidebolt1.clone();
-sidebolts1.position.set(0.35, 8., 0.71);
-sidebolts1.rotation.z = Math.PI / 3;
-sideboltGRp.add(sidebolts1);
-const sidebolts2 = sidebolt1.clone();
-sidebolts2.position.set(0.63, 8., 0.42);
-sidebolts2.rotation.z = Math.PI / 12;
-sideboltGRp.add(sidebolts2);
-
-
-
-
-const sidebolttop = hexnutbody.clone();
-sidebolttop.material = new THREE.MeshStandardMaterial({ color: 0x595959, metalness: 1, roughness: 0.15 });
-sidebolttop.position.set(0.7, 8.09, 0.84);
-sidebolttop.scale.set(0.04,0.04,0.04);
-sidebolttop.rotation.x = Math.PI / 2;
-sidebolttop.rotation.z = Math.PI / 6;
-const sidebolttop2 = sidebolttop.clone();
-sidebolttop2.position.set(0.35, 8.09, 0.71);
-sidebolttop2.rotation.z = -Math.PI / 3;
-const sidebolttop3 = sidebolttop.clone();
-sidebolttop3.position.set(0.63, 8.09, 0.42);
-sidebolttop3.rotation.z = -Math.PI / 12;  
-
-sideboltGRp.add(sidebolttop);
-sideboltGRp.add(sidebolttop2);
-sideboltGRp.add(sidebolttop3);
-
-sideboltGRp.add(sidebolttop);
-topflangGrp.add(sideboltGRp);
-const sideboltGRp2 = sideboltGRp.clone();
-sideboltGRp2.position.set(-0.05, 0, -1);
-
-topflangGrp.add(sideboltGRp2);
-
-
-
-
-
-standGroup.add(topflangGrp);
-
-
 
 
 scene.add(standGroup);
 standGroup.scale.set(3,2.5,3);
 standGroup.position.y = -8.5;
-standGroup.position.x = -7;
+standGroup.position.x = -7; 
  
 
 //pipe connecting to gas chamber
