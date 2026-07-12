@@ -101,51 +101,51 @@ function goldplate(r, hasHoles = false) {
 
     // ==========================================
     // CSG SPHERICAL INCISIONS (TOP AND BOTTOM)
+    //==========================================
+    const incisionRadius = 0.05;
+    const spacing = 0.45; // Distance between incisions
+
+    // Base plate brush
+    const plateBrush = new Brush(geometry);
+    plateBrush.updateMatrixWorld();
+
+    // Create a base cutter sphere
+    const baseSphereGeo = new THREE.SphereGeometry(incisionRadius,6,6);
+    const cutterGeometries = [];
+
+    // Generate grid of spherical incisions
+    for (let x = -r; x <= r; x += spacing) {
+        for (let y = -r; y <= r; y += spacing) {
+            // Keep incisions inside the radius (with a small margin so they don't clip the edges)
+            if (x * x + y * y < (r - 0.2) * (r - 0.2)) {
+                // Top spherical incision (centered at z = depth)
+                const topSphere = baseSphereGeo.clone();
+                topSphere.translate(x, y, extrudesettings.depth);
+                cutterGeometries.push(topSphere);
+
+                // Bottom spherical incision (centered at z = 0)
+                const botSphere = baseSphereGeo.clone();
+                botSphere.translate(x, y, 0);
+                cutterGeometries.push(botSphere);
+            }
+        }
+    }
+
+    // Evaluate the CSG Subtraction if we have cutters
+    if (cutterGeometries.length > 0) {
+        const mergedCutters = BufferGeometryUtils.mergeGeometries(cutterGeometries);
+        const cutterBrush = new Brush(mergedCutters);
+        cutterBrush.updateMatrixWorld();
+
+        const evaluator = new Evaluator();
+        const result = evaluator.evaluate(plateBrush, cutterBrush, SUBTRACTION);
+
+        // Replace our starting geometry with the CSG result
+        evaluator.useGroups = false;
+        geometry.dispose();
+        geometry = result.geometry;
+    }
     // ==========================================
-    // const incisionRadius = 0.05;
-    // const spacing = 0.45; // Distance between incisions
-
-    // // Base plate brush
-    // const plateBrush = new Brush(geometry);
-    // plateBrush.updateMatrixWorld();
-
-    // // Create a base cutter sphere
-    // const baseSphereGeo = new THREE.SphereGeometry(incisionRadius,6,6);
-    // const cutterGeometries = [];
-
-    // // Generate grid of spherical incisions
-    // for (let x = -r; x <= r; x += spacing) {
-    //     for (let y = -r; y <= r; y += spacing) {
-    //         // Keep incisions inside the radius (with a small margin so they don't clip the edges)
-    //         if (x * x + y * y < (r - 0.2) * (r - 0.2)) {
-    //             // Top spherical incision (centered at z = depth)
-    //             const topSphere = baseSphereGeo.clone();
-    //             topSphere.translate(x, y, extrudesettings.depth);
-    //             cutterGeometries.push(topSphere);
-
-    //             // Bottom spherical incision (centered at z = 0)
-    //             const botSphere = baseSphereGeo.clone();
-    //             botSphere.translate(x, y, 0);
-    //             cutterGeometries.push(botSphere);
-    //         }
-    //     }
-    // }
-
-    // // Evaluate the CSG Subtraction if we have cutters
-    // if (cutterGeometries.length > 0) {
-    //     const mergedCutters = BufferGeometryUtils.mergeGeometries(cutterGeometries);
-    //     const cutterBrush = new Brush(mergedCutters);
-    //     cutterBrush.updateMatrixWorld();
-
-    //     const evaluator = new Evaluator();
-    //     const result = evaluator.evaluate(plateBrush, cutterBrush, SUBTRACTION);
-
-    //     // Replace our starting geometry with the CSG result
-    //     evaluator.useGroups = false;
-    //     geometry.dispose();
-    //     geometry = result.geometry;
-    // }
-    // // ==========================================
 
     const material = new THREE.MeshStandardMaterial({color: 0xd4af37, side: THREE.DoubleSide, roughness: 0.15, metalness: 1});
     const mesh = new THREE.Mesh(geometry, material);
@@ -262,8 +262,6 @@ tf_cylinder(0.45, 0.15, -0.1, 12, 1.5, Math.PI * 2, true);
 tf_cylinder(0.55, 0.1, -0.1, 12.05, 1.5, Math.PI * 2,);
 tf_cylinder(0.45, 0.15, -0.3, 12, -1.5, Math.PI * 2, true);
 tf_cylinder(0.53, 0.1, -0.3, 12.05, -1.5, Math.PI * 2,);
-
-
 
 const topflangGrp = new THREE.Group();
 const topvaccumGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 32);
@@ -2008,7 +2006,6 @@ standGroup.add(topPlateGroup);
 const EFAssembly= new THREE.Group();
 const EFmainGeom = new THREE.BoxGeometry(1,2,2);
 const EFmainmat =new THREE.MeshStandardMaterial({color:0x636A6E,metalness:1,roughness:0.15});
-const EFmainmat =new THREE.MeshStandardMaterial({color:0x636A6E,metalness:1,roughness:0.15});
 const EFmain = new THREE.Mesh(EFmainGeom,EFmainmat);
 EFAssembly.add(EFmain);
 //EFmain.rotation.x = Math.PI/2;
@@ -2018,7 +2015,6 @@ EFAssembly.add(EFmain2);
 EFmain2.position.set(0,2.02,0);
 
 const EFconnectorGeom = new THREE.CylinderGeometry(0.7,0.7,3,16,32);
-const Efconnectormat = new THREE.MeshStandardMaterial({color:0xd6d6d6,metalness:1,roughness:0.15});
 const Efconnectormat = new THREE.MeshStandardMaterial({color:0xd6d6d6,metalness:1,roughness:0.15});
 const EFconnector = new THREE.Mesh(EFconnectorGeom,Efconnectormat);
 EFAssembly.add(EFconnector);
