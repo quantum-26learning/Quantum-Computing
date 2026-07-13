@@ -2141,7 +2141,31 @@ for(let j=-0.4;j<=0.6;j+=0.4){
      EF3.position.set(j,1,1.2);
      EFAssembly.add(EF3);
 };
+const EFwirePoints2 = [
+    new THREE.Vector3(1.95, 2.05, 0),
+    new THREE.Vector3(2.5, 2.05, 0), 
+    new THREE.Vector3(2.9, 2.4, 0.2), 
+    new THREE.Vector3(3.2, 2.9, 0.4),
+    new THREE.Vector3(3.5, 3.3, 0.55),
+    //new THREE.Vector3(3.61, 3.57, 0.6),      // Start from EFconnector end
+    new THREE.Vector3(3.6, 3.58, 0.49), 
+    new THREE.Vector3(3.6, 3.64, 0.45),  
+    new THREE.Vector3(3.6, 3.64, 0.4), 
+     new THREE.Vector3(3.6, 3.64, 0.35),      // Start from EFconnector end
+    
+];
 
+const EFwireCurve2 = new THREE.CatmullRomCurve3(EFwirePoints2);
+
+const EFwireGeom2 = new THREE.TubeGeometry(
+    EFwireCurve2,
+    100,
+    0.05,
+    12,
+    false
+);
+const EFwire2 = new THREE.Mesh(EFwireGeom2, Efconnectormat);
+EFAssembly.add(EFwire2);
 
 standGroup.add(EFAssembly);
 EFAssembly.rotation.x=Math.PI/2;
