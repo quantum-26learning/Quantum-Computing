@@ -256,12 +256,24 @@ tf_cylinder(0.24, 0.1, -1.5, 12.4, -1, Math.PI * 2);
 tf_cylinder(0.35, 1.3, -1.5, 12.7, -1.15, Math.PI);
 tf_cylinder(1, 0.2, 1.5, 11.9, 0, Math.PI * 2);
 tf_cylinder(0.8, 0.9, 1.5, 12, 0, Math.PI * 2);
-tf_cylinder(0.2, 0.7, 0.3, 11.9, 0, Math.PI * 2);
-tf_cylinder(0.25, 0.01, 0.3, 12.6, 0, Math.PI * 2, true);
+tf_cylinder(0.32, 1, 0, 11.9, 0.2, Math.PI * 2);
+tf_cylinder(0.3, 0.01, 0, 12.6, 0.2, Math.PI * 2, true);
 tf_cylinder(0.45, 0.15, -0.1, 12, 1.5, Math.PI * 2, true);
 tf_cylinder(0.55, 0.1, -0.1, 12.05, 1.5, Math.PI * 2,);
 tf_cylinder(0.45, 0.15, -0.3, 12, -1.5, Math.PI * 2, true);
 tf_cylinder(0.53, 0.1, -0.3, 12.05, -1.5, Math.PI * 2,);
+tf_cylinder(0.12,1.5,1.2,12,0.3,Math.PI*2);
+tf_cylinder(0.12,1.8,1.5,12,-0.3,Math.PI*2);
+tf_cylinder(0.16,1.5,1.9,12,0.2,Math.PI*2);
+tf_cylinder(0.1,0.8,-0.6,11.9,0.5, Math.PI * 2);
+tf_cylinder(0.1, 0.8, -0.4, 11.9, -0.4, Math.PI * 2);
+tf_cylinder(0.24, 0.1, -1.9, 11.9, 1.4, Math.PI * 2);
+tf_cylinder(0.08,0.2,1.4,11.9,2., Math.PI * 2);
+tf_cylinder(0.08,0.2,1.8,11.9,1.2, Math.PI * 2);
+tf_cylinder(0.08,0.2,2.7,11.9,0.1, Math.PI * 2);
+tf_cylinder(0.08,0.2,2.7,11.9,-0.3, Math.PI * 2);
+
+
 
 const topflangGrp = new THREE.Group();
 const topvaccumGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 32);
@@ -359,6 +371,29 @@ const sideboltGRp2 = sideboltGRp.clone();
 sideboltGRp2.position.set(-0.06, 0, -1);
 
 topflangGrp.add(sideboltGRp2);
+
+
+//topvaccum around large still pump
+function create_topassemble(x,y,z,sx,sy,sz){
+  const vaccumtopassembly = vaccumcylindertopassemble.clone();
+  vaccumtopassembly.position.set(x,y,z);
+  vaccumtopassembly.scale.set(sx,sy,sz);
+  topflangGrp.add(vaccumtopassembly);
+  
+ 
+  
+  return vaccumtopassembly;
+};
+create_topassemble(-0.4, 0.15, -0.48,1,1,1);
+create_topassemble(0.07, 0.1, -0.26,0.4,1,0.4);
+create_topassemble(0.0, 0.08, 0.04,0.4,1,0.4);
+create_topassemble(-0.74, -0.19, 0.12,0.71,1,0.71);
+create_topassemble(0.767, -0.15, 0.61,0.3,1,0.3);
+create_topassemble(0.897,- 0.15, 0.34,0.3,1,0.3);
+create_topassemble(1.2,- 0.15, -0.02,0.3,1,0.3);
+create_topassemble(1.2, -0.15, -0.16,0.3,1,0.3);
+
+
 
 
 topflangGrp.scale.set(3,2.5,3);
@@ -2035,12 +2070,17 @@ EFconend2.rotation.z=Math.PI/2;
 //EFconnecting wire
 const EFwirePoints = [
     new THREE.Vector3(1.95, 0, 0),   // Start from EFconnector end
-    new THREE.Vector3(2.3, 0.05, 0),
-    new THREE.Vector3(2.8, 0.2, -0.15),
-    //new THREE.Vector3(3.5, 0.4, -0.4),
-    //new THREE.Vector3(4.5, 0.3, -0.8)
-    //new THREE.Vector3(3.5, 0.4, -0.4),
-    //new THREE.Vector3(4.5, 0.3, -0.8)
+    new THREE.Vector3(2.3, 0.05, 0.2),
+    new THREE.Vector3(2.5, 0.05, 0.3),
+    new THREE.Vector3(2.8, 0.3, 0.6),
+    new THREE.Vector3(2.9, 0.7, 0.8),
+    new THREE.Vector3(3.8, 2.8, 1),
+     new THREE.Vector3(3.9, 3, 1),
+     new THREE.Vector3(3.92, 3.1, 1),
+     new THREE.Vector3(3.942, 3.19, 0.8),
+
+    // new THREE.Vector3(3.97, 3.1, 0.65),
+    
 ];
 
 const EFwireCurve = new THREE.CatmullRomCurve3(EFwirePoints);
@@ -2057,9 +2097,9 @@ const EFwireGeom = new THREE.TubeGeometry(
 
 const EFwire = new THREE.Mesh(EFwireGeom, Efconnectormat);
 EFAssembly.add(EFwire);
-const EFwire2 = EFwire.clone();
-EFAssembly.add(EFwire2);
-EFwire2.position.set(0,2.05,0);
+
+
+
 
 const EFconnector2=EFconnector.clone();
 EFAssembly.add(EFconnector2);
@@ -2073,11 +2113,43 @@ const EFconend4 = EFconend.clone();
 EFAssembly.add(EFconend4);
 EFconend4.position.set(1.3,2.05,0);
 
+const EFextraGEom=new THREE.BoxGeometry(0.12,1,0.4);
+const EFextramat=new THREE.MeshStandardMaterial({color:'red'});
+const EFextra = new THREE.Mesh(EFextraGEom,EFmainmat);
+EFextra.position.set(0,3,1.2);
+EFAssembly.add(EFextra);
+EFextra.rotation.z=Math.PI/2;
+for(let i=-1.;i<=2.8;i+=0.6){
+    const EF2=EFextra.clone();
+    EF2.position.set(0,i,1.2);
+    EFAssembly.add(EF2);
+};
+
+
+
+
+
+
+ const EFextra2GE =new THREE.BoxGeometry(4,0.2,0.4);
+ const EFextra2=new THREE.Mesh(EFextra2GE,EFmainmat);
+ EFAssembly.add(EFextra2);
+ EFextra2.position.set(-0.4,1.,1.2);
+EFextra2.rotation.z=Math.PI/2;
+
+for(let j=-0.4;j<=0.6;j+=0.4){
+     const EF3 =EFextra2.clone();
+     EF3.position.set(j,1,1.2);
+     EFAssembly.add(EF3);
+};
+
+
 standGroup.add(EFAssembly);
 EFAssembly.rotation.x=Math.PI/2;
 EFAssembly.rotation.y=Math.PI;
 EFAssembly.position.set(3,8.5,-1.5);
 EFAssembly.scale.set(0.45,0.45,0.45);
+
+
 
 
 
