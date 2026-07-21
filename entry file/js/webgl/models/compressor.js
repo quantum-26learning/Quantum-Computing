@@ -171,7 +171,67 @@ export default class Compressor {
          compressorring.position.set(3.3,-2 ,2.55+i*0.15);
          const compressorring2=compressorring.clone();
          this.group.add(compressorring2);
-        compressorring2.position.set(1.7, -2, 2.55+i*0.15);}
+        compressorring2.position.set(1.7, -2, 2.55+i*0.15);
+        }
+         const compressorpipePoints = [
+        // Start (same)
+         new THREE.Vector3(1.7, -2, 2.7),
+
+         // Straight in Z
+         new THREE.Vector3(1.7, -2, 3.2),
+         new THREE.Vector3(1.7, -1.6, 3.45),
+         new THREE.Vector3(1.8, 2, 3.5),
+         new THREE.Vector3(1.8, 8, 3.5),
+         new THREE.Vector3(1.8, 14, 3.5),
+         new THREE.Vector3(2.2, 17, 3.5),
+
+         // Horizontal in X
+         new THREE.Vector3(5, 17, 3.5),
+         new THREE.Vector3(9, 17, 3.5),
+         new THREE.Vector3(13, 17, 3.5),
+         new THREE.Vector3(16.5, 17, 3.4),
+         new THREE.Vector3(17, 17, 3.0),
+
+          // Turn towards -Z
+         new THREE.Vector3(17, 17, 0),
+         new THREE.Vector3(17, 17, -5),
+         new THREE.Vector3(17, 17, -10),
+         // Turn towards the end
+         new THREE.Vector3(17, 17, -14),
+         new THREE.Vector3(16.5, 17, -15.2),
+         new THREE.Vector3(15.8, 17, -15.7),
+         new THREE.Vector3(15.0, 17.05, -15.85),
+         new THREE.Vector3(14.5, 17.08, -15.82),
+         new THREE.Vector3(14.2, 17.10, -15.75),
+         new THREE.Vector3(14.05, 17.10, -15.65),
+         new THREE.Vector3(14.0, 17.10, -15.50),
+    ];
+
+const curve = new THREE.CatmullRomCurve3(
+    compressorpipePoints,
+    false,
+    "centripetal",
+    0.5
+);
+            // new THREE.Vector3(3.97, 3.1, 0.65),
+            
+        
+        
+        const compressorpipeCurve = new THREE.CatmullRomCurve3(compressorpipePoints);
+        
+        const compressorpipeGeom = new THREE.TubeGeometry(
+            compressorpipeCurve,
+            100,
+            0.1,
+            12,
+            false
+        );
+        const compressorpipeMat =new THREE.MeshStandardMaterial({color:'red'});
+        
+        
+        const compressorpipe = new THREE.Mesh(compressorpipeGeom, compressorpipeMat);
+        this.group.add(compressorpipe);
+        
 
     }
   

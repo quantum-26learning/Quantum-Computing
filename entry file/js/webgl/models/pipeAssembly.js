@@ -4,9 +4,10 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 export default class PipeAssembly { 
     constructor() {
         this.group = new THREE.Group();
-        this.group.scale.set(3,3,3);
-        this.group.position.set(5.8,10,0);
-        this.group.rotation.y = Math.PI;
+        this.group.scale.set(2,2,2);
+        this.group.position.set(-12,10,0.5);
+        
+        
         this.buildPipeAssembly();
     }
 
@@ -70,7 +71,7 @@ export default class PipeAssembly {
         // Vertical Pipe
         // --------------------------
         const right_vertical_pipe = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.20, 0.20, 1.0, 64),
+          new THREE.CylinderGeometry(0.20, 0.20, 1, 64),
           pipe_material
         );
         right_vertical_pipe.position.set(2.5, 1.0, 0);
