@@ -1,15 +1,26 @@
 import * as THREE from 'three';
 import { displayCoords } from './gui.js'; 
 
-export function setupRaycaster(camera, scene ) {
-    // Instantiate these once outside the listener for better performance
+export function setupRaycaster(camera, scene, canvas) {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
+    const mouseDownPos = new THREE.Vector2();
 
-    window.addEventListener('click', (event) => {
+    canvas.addEventListener('mousedown', (event) => {
+        mouseDownPos.x = event.clientX;
+        mouseDownPos.y = event.clientY;
+    });
+
+    canvas.addEventListener('mouseup', (event) => {
+        const mouseUpPos = new THREE.Vector2(event.clientX, event.clientY);
+        if (mouseDownPos.distanceTo(mouseUpPos) > 0) {
+            return; // It's a drag, not a click
+        }
+
+        const rect = canvas.getBoundingClientRect();
         // 1. Normalize mouse coordinates
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
         // 2. Cast the ray
         raycaster.setFromCamera(mouse, camera);
@@ -25,7 +36,6 @@ export function setupRaycaster(camera, scene ) {
             displayCoords.x = Number(hitPoint.x.toFixed(2));
             displayCoords.y = Number(hitPoint.y.toFixed(2));
             displayCoords.z = Number(hitPoint.z.toFixed(2));
-
         }
     });
 }
