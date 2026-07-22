@@ -29,6 +29,7 @@ export default class Renderer {
         this.renderer.setPixelRatio(
             Math.min(window.devicePixelRatio, 2)
         );
+        
     }
 
     update() {

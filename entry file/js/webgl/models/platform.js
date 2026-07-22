@@ -8,7 +8,7 @@ export default class Platform {
 
     buildPlatform() {
         const floorGeometry = new THREE.PlaneGeometry(200, 200);
-        const floorMaterial = new THREE.MeshPhysicalMaterial({ color: 0x1c1c1c, metalness: 1});
+        const floorMaterial = new THREE.MeshPhysicalMaterial({ color:  0x777777, roughness: 0.8});
         const floor = new THREE.Mesh(floorGeometry, floorMaterial);
         this.group.add(floor);
         floor.rotation.x = -Math.PI / 2;

@@ -6,7 +6,7 @@ import PipeAssembly from "../models/pipeAssembly.js";
 import Stand from "../models/stand.js";
 import ControlRack from "../models/controlRack/CRindex.js";
 import Platform from "../models/Platform.js";
-
+import Glasswall from "../models/glasswall.js";
 
 export default class World {
     constructor(experience) {
@@ -32,5 +32,8 @@ export default class World {
 
         const platform = new Platform();
         this.scene.add(platform.getGroup());
+
+        const glasswall= new Glasswall();
+        this.scene.add(glasswall.getGroup());
     }
 }
