@@ -12,9 +12,8 @@ export default class Rack{
         const rackFrameMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.4, metalness: 0.2 });
         const railsMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.5, metalness: 0.8 });
         const aluminumExtrusionMat = new THREE.MeshStandardMaterial({ color: 0xb0b0b0, roughness: 0.3, metalness: 0.8 });
-        const shelfMat = new THREE.MeshStandardMaterial({ color: 0xc2a679, roughness: 0.7 }); // Wooden shelf visible inside
+        const shelfMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.7, metalness:0.2 }); // Wooden shelf visible inside
         const baseWheelMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.6 });
-
 
         // Dimensions
         const rackWidth = 0.6;   
@@ -79,11 +78,8 @@ export default class Rack{
 // Internal Wooden Shelf (Visible in the middle-lower region)
         const shelfGeo = new THREE.BoxGeometry(rackWidth - postThickness * 2, 0.015, rackDepth - postThickness * 2);
         const woodShelf = new THREE.Mesh(shelfGeo, shelfMat);
-        woodShelf.position.set(0, 0.33, -0.04);
-        const secondWoodShelf = woodShelf.clone()
-        secondWoodShelf.position.set(0,0.97,-0.04)
+        woodShelf.position.set(0, 0.78, -0.04);
         lowerRack.add(woodShelf);
-        lowerRack.add(secondWoodShelf);
 
 // Base Wheels / Casters
         const wheelGeo = new THREE.CylinderGeometry(0.03, 0.03, 0.04, 16);
@@ -152,7 +148,7 @@ export default class Rack{
 
 // Intermediate shelf shelves inside the open frame
         const upperShelfGeo = new THREE.BoxGeometry(rackWidth - aluThickness * 2, 0.01,         rackDepth - aluThickness * 2);
-        const upperShelfLayers = [0.25, 0.5, 0.72];
+        const upperShelfLayers = [0.25, 0.475, 0.72];
 
         upperShelfLayers.forEach(heightY => {
             const layerShelf = new THREE.Mesh(upperShelfGeo, aluminumExtrusionMat);
