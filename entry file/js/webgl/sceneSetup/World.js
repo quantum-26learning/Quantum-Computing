@@ -6,6 +6,8 @@ import PipeAssembly from "../models/pipeAssembly.js";
 import Stand from "../models/stand.js";
 import ControlRack from "../models/controlRack/CRindex.js";
 import Platform from "../models/Platform.js";
+import classicalComputer from "../models/classicalComp.js";
+import Glasswall from "../models/glasswall.js";
 
 
 export default class World {

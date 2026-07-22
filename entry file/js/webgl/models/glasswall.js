@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export default class GlassWall {
     constructor() {
         this.group = new THREE.Group();
-        this.group.position.set(-4, -7, -6);
+        this.group.position.set(-4, -7, -9);
 
         this.buildGlassWall();
     }
@@ -12,7 +12,7 @@ export default class GlassWall {
 
         // Glass geometry
         const glass = new THREE.Mesh(
-            new THREE.BoxGeometry(18, 35, 0.1),
+            new THREE.BoxGeometry(55, 55, 0.4),
             new THREE.MeshPhysicalMaterial({
                 color: 0xffffff,
                 transmission: 1,
