@@ -231,7 +231,9 @@ export default class Compressor {
             false
         );
 
-        const compressorpipeMat = new THREE.MeshStandardMaterial({color:' 0xE7E7E7'});
+        const compressorpipeMat = new THREE.MeshStandardMaterial({color: 0x636A6E,
+            metalness: 1,
+            roughness: 0.15});
         
         
         
