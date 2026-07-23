@@ -18,7 +18,7 @@ export default class Scroll{
             scrollTrigger: {
                 trigger: this.wrapper,
                 start: "-10% top",
-                end: "+=5000",
+                end: "+=8000",
                 scrub: true,
                 // markers: true,
                 pin: true,
